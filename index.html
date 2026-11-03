@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSafe ✨ | Student Cybersecurity Awareness</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Quicksand & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelPink: '#ffd1dc',
+                        pastelLavender: '#e6e6fa',
+                        pastelMint: '#d5f4e6',
+                        pastelPeach: '#ffe5b4',
+                        pastelBlue: '#d4f0fc',
+                        blush: '#ffb7c5',
+                        deepLavender: '#9370db',
+                        darkPurple: '#4a3b5c'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        cute: ['Quicksand', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #f3e5f5 50%, #e8f4f8 100%);
+            min-height: 100vh;
+            color: #4a3b5c;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 183, 197, 0.4);
+            box-shadow: 0 10px 30px rgba(147, 112, 219, 0.08);
+        }
+        .girly-gradient {
+            background: linear-gradient(135deg, #ffb7c5 0%, #da70d6 50%, #ba55d3 100%);
+        }
+        .girly-text-gradient {
+            background: linear-gradient(135deg, #da70d6, #9370db, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb7c5;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #da70d6;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Notification Banner / Custom Modal Container -->
+    <div id="modalContainer" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card p-6 rounded-3xl max-w-md w-full mx-4 shadow-2xl transform transition-all scale-95 opacity-0" id="modalBox">
+            <div class="text-center">
+                <div id="modalIcon" class="text-4xl mb-3 text-pink-500">✨</div>
+                <h3 id="modalTitle" class="text-xl font-bold text-darkPurple font-cute mb-2">Notice</h3>
+                <p id="modalMessage" class="text-gray-600 mb-6">Message goes here...</p>
+                <button onclick="closeModal()" class="girly-gradient text-white px-6 py-2.5 rounded-full font-bold shadow-md hover:opacity-90 transition">Got it, Bestie! 💕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-pink-100 px-4 lg:px-12 py-3.5 transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-full girly-gradient flex items-center justify-center text-white shadow-md text-lg">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold font-cute girly-text-gradient">CyberSafe</span>
+                    <span class="text-xs bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full block font-medium">✨ Student Edition</span>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 font-medium text-gray-700">
+                <button onclick="switchTab('home')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600 active-tab" data-target="home">
+                    <i class="fa-solid fa-house-chimney mr-1.5"></i> Home
+                </button>
+                <button onclick="switchTab('modules')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600" data-target="modules">
+                    <i class="fa-solid fa-book-open-reader mr-1.5"></i> Modules
+                </button>
+                <button onclick="switchTab('checker')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600" data-target="checker">
+                    <i class="fa-solid fa-key mr-1.5"></i> Password Lab
+                </button>
+                <button onclick="switchTab('quiz')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600" data-target="quiz">
+                    <i class="fa-solid fa-puzzle-piece mr-1.5"></i> Quiz Zone
+                </button>
+                <button onclick="switchTab('ethics-hub')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600" data-target="ethics-hub">
+                    <i class="fa-solid fa-scale-balanced mr-1.5"></i> Cyber Laws & Ethics
+                </button>
+                <button onclick="switchTab('admin')" class="nav-btn px-4 py-2 rounded-full transition hover:bg-pink-50 hover:text-pink-600" data-target="admin">
+                    <i class="fa-solid fa-sliders mr-1.5"></i> Admin
+                </button>
+            </nav>
+
+            <!-- User Profile / Auth Quick Pill -->
+            <div class="flex items-center space-x-3">
+                <div id="userBadge" class="hidden sm:flex items-center space-x-2 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200">
+                    <div class="w-6 h-6 rounded-full bg-purple-300 flex items-center justify-center text-xs text-white font-bold" id="userInitial">S</div>
+                    <span class="text-xs font-semibold text-gray-700" id="userNameDisplay">Student User</span>
+                </div>
+                <button onclick="openLoginModal()" class="girly-gradient text-white px-4 py-2 rounded-full font-semibold text-sm shadow-md hover:opacity-90 transition transform hover:scale-105">
+                    <i class="fa-solid fa-user-astronaut mr-1"></i> Join / Login
+                </button>
+                <!-- Mobile Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 p-2 text-xl">
+                    <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden pt-4 pb-2 border-t border-pink-100 mt-3 flex flex-col space-y-2">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-house-chimney mr-2 text-pink-500"></i> Home
+            </button>
+            <button onclick="switchTab('modules'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-book-open-reader mr-2 text-pink-500"></i> Modules
+            </button>
+            <button onclick="switchTab('checker'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-key mr-2 text-pink-500"></i> Password Lab
+            </button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-puzzle-piece mr-2 text-pink-500"></i> Quiz Zone
+            </button>
+            <button onclick="switchTab('ethics-hub'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-scale-balanced mr-2 text-pink-500"></i> Cyber Laws & Ethics
+            </button>
+            <button onclick="switchTab('admin'); toggleMobileMenu();" class="text-left px-4 py-2 rounded-xl hover:bg-pink-50 text-gray-700 font-medium">
+                <i class="fa-solid fa-sliders mr-2 text-pink-500"></i> Admin Dashboard
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 lg:px-12 py-8">
+
+        <!-- ==================== TAB 1: HOME ==================== -->
+        <section id="tab-home" class="tab-content space-y-12">
+            <!-- Hero Section -->
+            <div class="glass-card rounded-3xl p-8 lg:p-12 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between">
+                <!-- Background decorative floating circles -->
+                <div class="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-pink-200/50 blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -left-12 w-64 h-64 rounded-full bg-purple-200/40 blur-3xl pointer-events-none"></div>
+                
+                <div class="lg:w-7/12 z-10 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-pink-100 text-pink-700 px-3.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
+                        <i class="fa-solid fa-sparkles"></i> <span>Stay Cute, Stay Secure</span>
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-extrabold font-cute text-darkPurple leading-tight">
+                        Navigate the Digital World with <span class="girly-text-gradient">Confidence!</span> ✨
+                    </h1>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Welcome to <span class="font-bold text-purple-600">CyberSafe</span>—your cozy aesthetic hub to learn about phishing protection, unbreakable passphrases, digital privacy, and online ethics. Designed for students who love both style and smarts!
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">
+                        <button onclick="switchTab('modules')" class="girly-gradient text-white px-8 py-3.5 rounded-full font-bold shadow-lg hover:opacity-90 transition transform hover:scale-105 flex items-center space-x-2">
+                            <span>Explore Modules</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchTab('quiz')" class="bg-white text-purple-600 border-2 border-purple-200 px-8 py-3.5 rounded-full font-bold shadow-sm hover:bg-purple-50 transition transform hover:scale-105 flex items-center space-x-2">
+                            <span>Take a Quiz</span> <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:w-5/12 mt-10 lg:mt-0 z-10 flex justify-center">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-tr from-pink-200 via-purple-200 to-blue-200 rounded-3xl p-4 shadow-xl flex items-center justify-center transform rotate-3 hover:rotate-0 transition duration-500">
+                        <div class="absolute inset-2 bg-white/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                            <div class="w-20 h-20 rounded-2xl girly-gradient flex items-center justify-center text-white text-4xl shadow-md animate-bounce">
+                                <i class="fa-solid fa-shield-cat"></i>
+                            </div>
+                            <h3 class="font-cute font-bold text-xl text-darkPurple">CyberKitty Guard</h3>
+                            <p class="text-xs text-gray-500">"Never click suspicious links from strangers, bestie! Always verify the sender."</p>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-semibold">Tip of the Day 💡</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sliding Trivia Carousel Section -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+                    <div>
+                        <span class="text-xs font-bold text-pink-600 bg-pink-100 px-3 py-1 rounded-full uppercase tracking-wider">🧠 Brain Candy</span>
+                        <h2 class="text-2xl lg:text-3xl font-bold font-cute text-darkPurple mt-2">Cybersecurity Trivia Carousel</h2>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-4 md:mt-0">
+                        <button onclick="prevTrivia()" class="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition shadow-sm">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <span id="triviaIndicator" class="text-sm font-semibold text-gray-600 px-2">1 / 5</span>
+                        <button onclick="nextTrivia()" class="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-600 hover:bg-pink-50 transition shadow-sm">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <button onclick="toggleAutoPlay()" id="autoPlayBtn" class="ml-2 text-xs bg-purple-100 text-purple-700 px-3 py-2 rounded-full font-bold hover:bg-purple-200 transition">
+                            <i class="fa-solid fa-play mr-1"></i> Auto-Play
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Carousel Card Container -->
+                <div id="triviaCardContainer" class="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-2xl p-6 md:p-8 border border-pink-200/60 shadow-inner transition-all duration-300">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl girly-gradient flex-shrink-0 flex items-center justify-center text-white text-xl shadow-md" id="triviaIcon">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs font-bold text-purple-600 uppercase tracking-widest" id="triviaCategory">Did You Know?</span>
+                            <h3 class="text-xl font-bold font-cute text-darkPurple" id="triviaTitle">Loading Trivia...</h3>
+                            <p class="text-gray-600 text-base leading-relaxed" id="triviaDescription">Please wait while we load fun cybersecurity facts for you!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats & Highlights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-3xl p-6 flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold font-cute text-darkPurple">95%</h4>
+                        <p class="text-xs text-gray-500 font-medium">Of security breaches are caused by human error.</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-3xl p-6 flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold font-cute text-darkPurple">3.4 Billion</h4>
+                        <p class="text-xs text-gray-500 font-medium">Phishing emails sent worldwide every single day.</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-3xl p-6 flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-face-smile-wink"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold font-cute text-darkPurple">100% Fun</h4>
+                        <p class="text-xs text-gray-500 font-medium">Learning cyber safety the aesthetic student way.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: LEARNING MODULES ==================== -->
+        <section id="tab-modules" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-xs font-bold text-pink-600 bg-pink-100 px-3 py-1 rounded-full uppercase tracking-wider">📚 Knowledge Hub</span>
+                <h2 class="text-3xl font-bold font-cute text-darkPurple">Cybersecurity Learning Modules</h2>
+                <p class="text-gray-600">Master essential online safety skills through our bite-sized, aesthetic guides tailored for students.</p>
+            </div>
+
+            <!-- Modules Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Module 1 -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-fish"></i>
+                            </div>
+                            <span class="text-xs font-bold bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Module 01</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-cute text-darkPurple mb-2">Phishing & Social Engineering</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            Spot fake links, urgent scare tactics, and impersonation scams in your emails, DMs, and text messages before you click!
+                        </p>
+                    </div>
+                    <button onclick="openModuleDetail('phishing')" class="w-full bg-pink-50 text-pink-600 border border-pink-200 py-2.5 rounded-2xl font-bold hover:bg-pink-100 transition flex items-center justify-center space-x-2">
+                        <span>Read Lesson</span> <i class="fa-solid fa-book-open text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <span class="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1 rounded-full">Module 02</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-cute text-darkPurple mb-2">Password Security & Passphrases</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            Say goodbye to weak passwords like `password123`. Learn how to build strong, memorable multi-word passphrases with symbols!
+                        </p>
+                    </div>
+                    <button onclick="openModuleDetail('passwords')" class="w-full bg-purple-50 text-purple-600 border border-purple-200 py-2.5 rounded-2xl font-bold hover:bg-purple-100 transition flex items-center justify-center space-x-2">
+                        <span>Read Lesson</span> <i class="fa-solid fa-book-open text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-user-secret"></i>
+                            </div>
+                            <span class="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Module 03</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-cute text-darkPurple mb-2">Privacy & Social Media Safety</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            Manage your digital footprint, lock down privacy settings on Instagram & TikTok, and avoid oversharing personal info.
+                        </p>
+                    </div>
+                    <button onclick="openModuleDetail('privacy')" class="w-full bg-blue-50 text-blue-600 border border-blue-200 py-2.5 rounded-2xl font-bold hover:bg-blue-100 transition flex items-center justify-center space-x-2">
+                        <span>Read Lesson</span> <i class="fa-solid fa-book-open text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <span class="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Module 04</span>
+                        </div>
+                        <h3 class="text-xl font-bold font-cute text-darkPurple mb-2">Digital Ethics & Responsible Tech</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            Understand cyberbullying prevention, copyright respect, ethical hacking basics, and responsible social media citizenship.
+                        </p>
+                    </div>
+                    <button onclick="openModuleDetail('ethics')" class="w-full bg-amber-50 text-amber-600 border border-amber-200 py-2.5 rounded-2xl font-bold hover:bg-amber-100 transition flex items-center justify-center space-x-2">
+                        <span>Read Lesson</span> <i class="fa-solid fa-book-open text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: PASSWORD STRENGTH CHECKER LAB ==================== -->
+        <section id="tab-checker" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-xs font-bold text-pink-600 bg-pink-100 px-3 py-1 rounded-full uppercase tracking-wider">🔑 Interactive Tool</span>
+                <h2 class="text-3xl font-bold font-cute text-darkPurple">Password Strength Checker Lab</h2>
+                <p class="text-gray-600">Type a password below to test its strength in real-time with our cute aesthetic gauge!</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 md:p-10 max-w-2xl mx-auto space-y-6">
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-darkPurple font-cute">Enter Password to Test:</label>
+                    <div class="relative">
+                        <input type="password" id="passwordInput" oninput="checkPasswordStrength()" placeholder="Type secret password here..." class="w-full px-5 py-3.5 rounded-2xl border-2 border-pink-200 focus:outline-none focus:border-purple-400 bg-white/90 text-gray-800 pr-12">
+                        <button onclick="togglePasswordVisibility()" class="absolute right-4 top-3.5 text-gray-400 hover:text-purple-600 text-lg">
+                            <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Strength Meter Bar -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-sm font-semibold">
+                        <span class="text-gray-600">Strength Level:</span>
+                        <span id="strengthLabel" class="text-pink-600 font-bold">Too basic bestie! 📉</span>
+                    </div>
+                    <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden p-0.5 border border-pink-100">
+                        <div id="strengthBar" class="h-full rounded-full w-1/5 bg-pink-400 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Checklist Feedbacks -->
+                <div class="bg-pink-50/60 rounded-2xl p-5 border border-pink-100 space-y-2.5">
+                    <h4 class="text-xs font-bold text-darkPurple uppercase tracking-wider mb-2">Security Requirements Checklist:</h4>
+                    <div id="reqLength" class="flex items-center space-x-2.5 text-sm text-gray-500">
+                        <i class="fa-regular fa-circle-xmark text-pink-400"></i> <span>At least 8 characters long</span>
+                    </div>
+                    <div id="reqUpper" class="flex items-center space-x-2.5 text-sm text-gray-500">
+                        <i class="fa-regular fa-circle-xmark text-pink-400"></i> <span>Contains uppercase letter (A-Z)</span>
+                    </div>
+                    <div id="reqLower" class="flex items-center space-x-2.5 text-sm text-gray-500">
+                        <i class="fa-regular fa-circle-xmark text-pink-400"></i> <span>Contains lowercase letter (a-z)</span>
+                    </div>
+                    <div id="reqNumber" class="flex items-center space-x-2.5 text-sm text-gray-500">
+                        <i class="fa-regular fa-circle-xmark text-pink-400"></i> <span>Contains numbers (0-9)</span>
+                    </div>
+                    <div id="reqSpecial" class="flex items-center space-x-2.5 text-sm text-gray-500">
+                        <i class="fa-regular fa-circle-xmark text-pink-400"></i> <span>Contains special symbol (!@#$...)</span>
+                    </div>
+                </div>
+
+                <!-- Cute Tips Box -->
+                <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4 flex items-center space-x-3 text-purple-900 text-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl text-purple-600 flex-shrink-0"></i>
+                    <p><strong class="font-bold">Pro Tip:</strong> Use passphrases like <code class="bg-white/70 px-2 py-0.5 rounded font-mono text-purple-700">PurpleCoffeeCup42!</code> instead of random gibberish.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: INTERACTIVE QUIZ ZONE ==================== -->
+        <section id="tab-quiz" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-xs font-bold text-pink-600 bg-pink-100 px-3 py-1 rounded-full uppercase tracking-wider">🎯 Test Your Skills</span>
+                <h2 class="text-3xl font-bold font-cute text-darkPurple">Interactive Quiz Zone</h2>
+                <p class="text-gray-600">Answer cybersecurity questions correctly, earn points, and celebrate with cute confetti!</p>
+            </div>
+
+            <!-- Quiz Card -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 max-w-2xl mx-auto" id="quizCard">
+                <!-- Quiz Header -->
+                <div class="flex justify-between items-center mb-6 border-b border-pink-100 pb-4">
+                    <span id="quizProgress" class="text-xs font-bold text-purple-600 uppercase tracking-widest">Question 1 of 5</span>
+                    <span id="quizScoreBadge" class="text-xs bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-full">Score: 0 pts</span>
+                </div>
+
+                <!-- Question Box -->
+                <div class="space-y-6" id="questionBox">
+                    <h3 id="questionText" class="text-xl font-bold font-cute text-darkPurple">Loading Question...</h3>
+                    <div id="optionsContainer" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Explanation Box (Hidden initially) -->
+                <div id="explanationBox" class="hidden mt-6 p-4 rounded-2xl bg-pink-50 border border-pink-200 text-sm space-y-3">
+                    <div class="font-bold text-darkPurple flex items-center space-x-2" id="explanationHeader">
+                        <i class="fa-solid fa-circle-check text-green-500"></i> <span>Correct!</span>
+                    </div>
+                    <p class="text-gray-600" id="explanationText">Explanation goes here...</p>
+                    <button onclick="nextQuestion()" class="girly-gradient text-white px-6 py-2 rounded-xl font-bold text-sm shadow hover:opacity-90 transition">
+                        Next Question <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Results Screen (Hidden initially) -->
+            <div id="quizResultScreen" class="glass-card rounded-3xl p-10 max-w-md mx-auto text-center hidden space-y-6">
+                <div class="w-20 h-20 rounded-full girly-gradient mx-auto flex items-center justify-center text-white text-3xl shadow-lg">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h3 class="text-2xl font-bold font-cute text-darkPurple">Quiz Completed! 🎉</h3>
+                <p class="text-gray-600" id="finalScoreText">You scored 5 out of 5 correctly!</p>
+                <div class="p-4 bg-pink-50 rounded-2xl border border-pink-100 text-sm text-purple-900 font-semibold" id="badgeEarnedText">
+                    Badge Earned: 🛡️ Certified Cyber Queen / King!
+                </div>
+                <button onclick="restartQuiz()" class="girly-gradient text-white px-8 py-3 rounded-full font-bold shadow-md hover:opacity-90 transition">
+                    Try Again 💖
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: CYBER LAWS & IT ETHICS HUB ==================== -->
+        <section id="tab-ethics-hub" class="tab-content hidden space-y-10">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-bold text-purple-600 bg-purple-100 px-3.5 py-1 rounded-full uppercase tracking-wider">⚖️ Professional Standards & Legislation</span>
+                <h2 class="text-3xl lg:text-4xl font-bold font-cute text-darkPurple">Cyber Laws & IT Ethics Hub</h2>
+                <p class="text-gray-600">Explore essential legal frameworks, navigate ethical dilemmas like a professional IT expert, and sign your digital student pledge!</p>
+            </div>
+
+            <!-- Feature 1: Interactive Cyber Laws Overview -->
+            <div class="space-y-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl girly-gradient flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-gavel"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-cute text-darkPurple">1. Key Cyber Legislation & Data Privacy</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Law 1 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <h4 class="text-xl font-bold font-cute text-darkPurple mb-2">Data Privacy Act (DPA)</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                                Protects individual personal information in information and communications systems in government and the private sector, mandating consent and secure data handling.
+                            </p>
+                        </div>
+                        <button onclick="openLawModal('dpa')" class="w-full bg-pink-50 text-pink-600 border border-pink-200 py-2 rounded-xl font-bold text-sm hover:bg-pink-100 transition">
+                            Learn Key Rights ✨
+                        </button>
+                    </div>
+
+                    <!-- Law 2 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h4 class="text-xl font-bold font-cute text-darkPurple mb-2">Anti-Cybercrime Act</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                                Criminalizes illegal access, data interference, identity theft, cybersex, and cyberbullying with stiff legal penalties to ensure internet safety.
+                            </p>
+                        </div>
+                        <button onclick="openLawModal('cybercrime')" class="w-full bg-purple-50 text-purple-600 border border-purple-200 py-2 rounded-xl font-bold text-sm hover:bg-purple-100 transition">
+                            Offenses & Penalties ⚖️
+                        </button>
+                    </div>
+
+                    <!-- Law 3 -->
+                    <div class="glass-card rounded-3xl p-6 flex flex-col justify-between hover:shadow-xl transition duration-300">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-copyright"></i>
+                            </div>
+                            <h4 class="text-xl font-bold font-cute text-darkPurple mb-2">Digital Copyright & Ethics</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                                Governs intellectual property online, prohibiting software piracy, unauthorized asset redistribution, and intellectual theft of digital creations.
+                            </p>
+                        </div>
+                        <button onclick="openLawModal('copyright')" class="w-full bg-blue-50 text-blue-600 border border-blue-200 py-2 rounded-xl font-bold text-sm hover:bg-blue-100 transition">
+                            Ethics & Fair Use 💡
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2: IT Professional Ethics Scenario Simulator -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 space-y-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shadow-sm">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Interactive Dilemma Lab</span>
+                        <h3 class="text-2xl font-bold font-cute text-darkPurple">2. IT Professional Ethics Scenario Simulator</h3>
+                    </div>
+                </div>
+
+                <div id="scenarioContainer" class="space-y-6">
+                    <div class="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 p-6 rounded-2xl border border-pink-200 space-y-3">
+                        <span id="scenarioTag" class="text-xs font-bold bg-pink-100 text-pink-700 px-3 py-1 rounded-full">Scenario 1 of 3</span>
+                        <h4 id="scenarioTitle" class="text-xl font-bold font-cute text-darkPurple">The Vulnerable School Portal Discovery</h4>
+                        <p id="scenarioDesc" class="text-gray-700 text-base leading-relaxed">
+                            While studying for finals, you notice a simple URL parameter flaw in your school student portal that allows you to view other students' grades and personal home addresses without logging in. What do you do?
+                        </p>
+                    </div>
+
+                    <div id="scenarioOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <div id="scenarioFeedback" class="hidden p-6 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-3">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-800 text-lg" id="feedbackTitle">
+                            <i class="fa-solid fa-circle-check"></i> <span>Responsible Disclosure Best Practice!</span>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed" id="feedbackText">
+                            Feedback text goes here...
+                        </p>
+                        <button onclick="nextScenario()" class="girly-gradient text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow hover:opacity-90 transition">
+                            Next Ethical Dilemma <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3: Downloadable / Printable Code of Conduct -->
+            <div class="glass-card rounded-3xl p-8 md:p-10 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-pink-200 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-xl shadow-sm">
+                            <i class="fa-solid fa-file-signature"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-pink-600 uppercase tracking-widest">Student Pledge</span>
+                            <h3 class="text-2xl font-bold font-cute text-darkPurple">3. Digital Ethics Code of Conduct</h3>
+                        </div>
+                    </div>
+                    <button onclick="printCodeOfConduct()" class="girly-gradient text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-md hover:opacity-90 transition flex items-center space-x-2">
+                        <i class="fa-solid fa-print"></i> <span>Print / Save Certificate</span>
+                    </button>
+                </div>
+
+                <div id="codeOfConductBox" class="bg-white/90 p-8 rounded-3xl border-2 border-dashed border-pink-300 space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="w-12 h-12 rounded-full girly-gradient mx-auto flex items-center justify-center text-white text-xl shadow">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold font-cute text-darkPurple">CyberSafe Student Digital Citizenship Pledge</h4>
+                        <p class="text-xs text-gray-500">Check off each item below to commit to responsible technology use and professional IT ethics.</p>
+                    </div>
+
+                    <div class="space-y-3.5 max-w-2xl mx-auto">
+                        <label class="flex items-start space-x-3 p-3.5 rounded-2xl bg-pink-50/60 border border-pink-100 cursor-pointer hover:bg-pink-50 transition">
+                            <input type="checkbox" class="pledge-check w-5 h-5 accent-pink-500 mt-0.5 rounded cursor-pointer">
+                            <span class="text-sm text-gray-700 font-medium"><strong>Privacy Respect:</strong> I will never access, share, or expose private personal data belonging to my peers or faculty without explicit consent.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 p-3.5 rounded-2xl bg-purple-50/60 border border-purple-100 cursor-pointer hover:bg-purple-50 transition">
+                            <input type="checkbox" class="pledge-check w-5 h-5 accent-purple-500 mt-0.5 rounded cursor-pointer">
+                            <span class="text-sm text-gray-700 font-medium"><strong>Responsible Disclosure:</strong> If I discover a software flaw or security vulnerability, I will report it privately to the system administrator rather than exploiting it.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 p-3.5 rounded-2xl bg-blue-50/60 border border-blue-100 cursor-pointer hover:bg-blue-100 transition">
+                            <input type="checkbox" class="pledge-check w-5 h-5 accent-blue-500 mt-0.5 rounded cursor-pointer">
+                            <span class="text-sm text-gray-700 font-medium"><strong>Anti-Cyberbullying & Kindness:</strong> I pledge to use polite, respectful language online and stand against harassment in chats, DMs, and school forums.</span>
+                        </label>
+                        <label class="flex items-start space-x-3 p-3.5 rounded-2xl bg-amber-50/60 border border-amber-100 cursor-pointer hover:bg-amber-100 transition">
+                            <input type="checkbox" class="pledge-check w-5 h-5 accent-amber-500 mt-0.5 rounded cursor-pointer">
+                            <span class="text-sm text-gray-700 font-medium"><strong>Copyright & Honesty:</strong> I will properly cite online sources and respect digital intellectual property, avoiding plagiarism and pirated software.</span>
+                        </label>
+                    </div>
+
+                    <div class="text-center pt-4 border-t border-pink-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-2">
+                        <span>Signed by: <strong id="pledgeSignerName" class="text-purple-600">Student User</strong></span>
+                        <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full font-bold">✨ Certified Digital Citizen</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 6: ADMIN PANEL ==================== -->
+        <section id="tab-admin" class="tab-content hidden space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-purple-600 bg-purple-100 px-3 py-1 rounded-full uppercase tracking-wider">🛠️ Control Center</span>
+                    <h2 class="text-3xl font-bold font-cute text-darkPurple mt-2">Admin Dashboard</h2>
+                    <p class="text-gray-600 text-sm">Manage student quiz scores, add new trivia items, and monitor site engagement.</p>
+                </div>
+                <button onclick="openAddTriviaModal()" class="girly-gradient text-white px-5 py-2.5 rounded-full font-bold text-sm shadow hover:opacity-90 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-plus"></i> <span>Add New Trivia</span>
+                </button>
+            </div>
+
+            <!-- Dashboard Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Total Students Quiz Submissions</span>
+                        <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold font-cute text-darkPurple" id="totalSubmissionsCount">142</h3>
+                    <span class="text-xs text-green-600 font-semibold"><i class="fa-solid fa-arrow-up mr-1"></i> +12% this week</span>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Average Quiz Score</span>
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold font-cute text-darkPurple">88.4%</h3>
+                    <span class="text-xs text-green-600 font-semibold"><i class="fa-solid fa-arrow-up mr-1"></i> Excellent standing</span>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Active Trivia Items</span>
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold font-cute text-darkPurple" id="triviaCountDisplay">5</h3>
+                    <span class="text-xs text-purple-600 font-semibold">Live on Homepage</span>
+                </div>
+            </div>
+
+            <!-- Submissions Table -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-4">
+                <h3 class="text-xl font-bold font-cute text-darkPurple">Recent Student Quiz Submissions</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-pink-200 text-xs text-gray-500 uppercase">
+                                <th class="py-3 px-4">Student Name</th>
+                                <th class="py-3 px-4">Score</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminSubmissionsTable" class="text-sm divide-y divide-pink-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 border-t border-pink-100 mt-16 py-8 px-4 text-center text-xs text-gray-500 space-y-2">
+        <div class="flex justify-center space-x-6 mb-2">
+            <span class="hover:text-pink-600 cursor-pointer" onclick="switchTab('home')">Home</span>
+            <span class="hover:text-pink-600 cursor-pointer" onclick="switchTab('modules')">Modules</span>
+            <span class="hover:text-pink-600 cursor-pointer" onclick="switchTab('checker')">Password Lab</span>
+            <span class="hover:text-pink-600 cursor-pointer" onclick="switchTab('quiz')">Quiz Zone</span>
+        </div>
+        <p>CyberSafe ✨ Student Cybersecurity Awareness Website | Designed with pastel pinks & lavenders 💖</p>
+        <p>© 2026 CyberSafe. All rights reserved for secure students.</p>
+    </footer>
+
+    <!-- Module Detail Modal -->
+    <div id="moduleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card p-6 md:p-8 rounded-3xl max-w-lg w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b border-pink-200 pb-3">
+                <h3 id="moduleModalTitle" class="text-2xl font-bold font-cute text-darkPurple">Module Title</h3>
+                <button onclick="closeModuleModal()" class="text-gray-400 hover:text-gray-700 text-xl font-bold">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="moduleModalContent" class="space-y-4 text-gray-600 text-sm leading-relaxed">
+                <!-- Content injected -->
+            </div>
+            <div class="mt-6 text-right">
+                <button onclick="closeModuleModal()" class="girly-gradient text-white px-6 py-2 rounded-full font-bold text-sm shadow">Close Lesson</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login / Join Modal -->
+    <!-- Law Detail Modal -->
+    <div id="lawModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-pink-200 pb-3">
+                <h3 id="lawModalTitle" class="text-xl font-bold font-cute text-darkPurple">Law Title</h3>
+                <button onclick="closeLawModal()" class="text-gray-400 hover:text-gray-700 font-bold text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="lawModalBody" class="text-sm text-gray-600 space-y-3 leading-relaxed">
+                <!-- Injected -->
+            </div>
+            <div class="text-right pt-2">
+                <button onclick="closeLawModal()" class="girly-gradient text-white px-6 py-2 rounded-full font-bold text-sm shadow">Got it! 💖</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Trivia Modal (Admin) -->
+    <div id="addTriviaModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-pink-200 pb-2">
+                <h3 class="text-xl font-bold font-cute text-darkPurple">Add New Trivia Fact</h3>
+                <button onclick="closeAddTriviaModal()" class="text-gray-400 hover:text-gray-700 font-bold"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-darkPurple mb-1">Category:</label>
+                    <input type="text" id="newTriviaCat" placeholder="e.g. Phishing Alert 🎣" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-darkPurple mb-1">Trivia Title:</label>
+                    <input type="text" id="newTriviaTitle" placeholder="e.g. 91% of Cyberattacks start with..." class="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-darkPurple mb-1">Description:</label>
+                    <textarea id="newTriviaDesc" rows="3" placeholder="Detailed fun fact description..." class="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm focus:outline-none"></textarea>
+                </div>
+            </div>
+            <button onclick="saveNewTrivia()" class="w-full girly-gradient text-white py-3 rounded-xl font-bold shadow-md hover:opacity-90 transition">
+                Publish Trivia ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- State Variables ---
+        let currentStudentName = "Student User";
+        let autoPlayInterval = null;
+        let isAutoPlaying = false;
+
+        // Trivia Data Array
+        let triviaList = [
+            {
+                icon: "fa-solid fa-fish",
+                category: "Phishing Alert 🎣",
+                title: "Over 90% of cyberattacks begin with a phishing email!",
+                description: "Scammers use fake urgent messages pretending to be your school or bank to steal your login credentials. Always check the sender address carefully!"
+            },
+            {
+                icon: "fa-solid fa-key",
+                category: "Password Power 🔑",
+                title: "Length beats complexity every single time!",
+                description: "A 16-character passphrase like 'Purple-Cosmic-Laptop-2026!' takes centuries for hackers to crack, whereas 'P@ss1' takes less than a second!"
+            },
+            {
+                icon: "fa-solid fa-user-secret",
+                category: "Privacy Tip 🕵️‍♀️",
+                title: "Your location check-ins tell a story!",
+                description: "Posting real-time vacation check-ins or your daily school schedule on social media lets stalkers and scammers know when your home is empty."
+            },
+            {
+                icon: "fa-solid fa-wifi",
+                category: "Public Wi-Fi Risk 📶",
+                title: "Coffee shop Wi-Fi is wide open!",
+                description: "Unsecured public Wi-Fi networks allow hackers nearby to intercept your internet traffic. Always use a secure VPN when studying at cafes."
+            },
+            {
+                icon: "fa-solid fa-shield-cat",
+                category: "Digital Ethics 💖",
+                title: "Cyberbullying leaves a permanent digital scar!",
+                description: "Being kind and respectful online reflects true character. Remember: treat your digital peers the exact same way you want to be treated in person."
+            }
+        ];
+        let currentTriviaIndex = 0;
+
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                question: "You receive an urgent email from 'Netflix Support' saying your account will be deleted unless you click a link immediately. What should you do?",
+                options: [
+                    "Click the link right away and login",
+                    "Forward the email to all your besties",
+                    "Ignore the link and log into Netflix through the official app/website to check",
+                    "Reply to the email asking for confirmation"
+                ],
+                correct: 2,
+                explanation: "Scammers often create panic ('account deletion') to rush you into clicking malicious phishing links. Always verify directly through the official app or website!"
+            },
+            {
+                question: "Which of the following is considered a strong, secure passphrase?",
+                options: [
+                    "password123",
+                    "ilovecats",
+                    "Correct-Horse-Battery-Staple-42!",
+                    "student2026"
+                ],
+                correct: 2,
+                explanation: "Long passphrases containing multiple random words combined with numbers and symbols are extremely secure and easy to remember!"
+            },
+            {
+                question: "What is 'Social Engineering' in cybersecurity?",
+                options: [
+                    "Building social media apps like Instagram",
+                    "Manipulating people into voluntarily handing over confidential information",
+                    "An engineering degree focused on social networks",
+                    "Fixing broken Wi-Fi routers"
+                ],
+                correct: 1,
+                explanation: "Social engineering relies on human psychology—like impersonating IT staff or friends—rather than hacking computer firewalls directly."
+            },
+            {
+                question: "Why should you avoid posting your real-time vacation photos on public social media?",
+                options: [
+                    "Because photos use too much phone data",
+                    "It alerts potential burglars that your house is currently empty",
+                    "Your friends might get jealous",
+                    "Instagram algorithms will lower your views"
+                ],
+                correct: 1,
+                explanation: "Real-time location sharing broadcasts to everyone (including bad actors) that you are away from home."
+            },
+            {
+                question: "What does MFA or 2FA stand for, and why is it important?",
+                options: [
+                    "Main File Access; it speeds up your computer",
+                    "Multi-Factor Authentication; it adds an extra layer of security beyond just a password",
+                    "Malware Firewall App; it blocks viruses",
+                    "Mobile Friendly Application; for phone browsing"
+                ],
+                correct: 1,
+                explanation: "2FA/MFA requires a second verification step (like a code sent to your phone), meaning even if someone steals your password, they still can't log in!"
+            }
+        ];
+        let currentQuizIndex = 0;
+        let score = 0;
+        let quizCompleted = false;
+
+        // Cyber Laws & Ethics Simulator Scenarios
+        const ethicsScenarios = [
+            {
+                tag: "Scenario 1 of 3",
+                title: "The Vulnerable School Portal Discovery",
+                description: "While studying for finals, you notice a simple URL parameter flaw in your school student portal that allows you to view other students' grades and personal home addresses without logging in. What do you do?",
+                options: [
+                    {
+                        text: "A. Post screenshots on social media to show off your tech skills and embarrass the school IT department.",
+                        correct: false,
+                        feedback: "❌ Unethical & Illegal! Exposing student records violates data privacy laws (like the DPA) and qualifies as unauthorized data access under cybercrime laws."
+                    },
+                    {
+                        text: "B. Quietly close the browser tab and tell nobody, hoping no one else finds it.",
+                        correct: false,
+                        feedback: "💡 Inaction is safe for you, but leaves the security flaw active for malicious hackers to steal everyone's data."
+                    },
+                    {
+                        text: "C. Report the vulnerability privately and directly to the school IT administrator using responsible disclosure guidelines.",
+                        correct: true,
+                        feedback: "✨ Perfect! This is the gold standard of IT Professional Ethics and responsible vulnerability disclosure."
+                    },
+                    {
+                        text: "D. Use the flaw to change your own chemistry grade to an A+ so you pass the class.",
+                        correct: false,
+                        feedback: "🚨 Crime! Modifying school records without authorization is a serious cybercrime offense leading to expulsion or legal prosecution."
+                    }
+                ]
+            },
+            {
+                tag: "Scenario 2 of 3",
+                title: "The Pirated Textbook PDF in the Group Chat",
+                description: "A classmate shares a link in your student group chat to download a newly published, expensive $120 cybersecurity textbook as a free pirated PDF. You really need the book for class. What do you do?",
+                options: [
+                    {
+                        text: "A. Download it immediately and share the link with 10 other friends to be helpful.",
+                        correct: false,
+                        feedback: "❌ Copyright Infringement! Redistributing copyrighted digital assets violates digital intellectual property laws and harms textbook authors."
+                    },
+                    {
+                        text: "B. Politely remind the group chat about copyright ethics, check if the campus library has a digital copy, and buy a used copy.",
+                        correct: true,
+                        feedback: "✨ Excellent choice! Respecting intellectual property and software/book copyright is a core tenet of ethical IT citizenship."
+                    },
+                    {
+                        text: "C. Upload the PDF to a public website so anyone in the world can download it for free.",
+                        correct: false,
+                        feedback: "🚨 Unlawful distribution! Hosting copyrighted material publicly exposes you to legal takedowns and copyright lawsuits."
+                    }
+                ]
+            },
+            {
+                tag: "Scenario 3 of 3",
+                title: "The Viral Rumor in the Class Group",
+                description: "Someone in your student Discord server posts a fabricated, embarrassing rumor about a classmate accompanied by edited photos. Everyone is laughing and forwarding it. What is your ethical response?",
+                options: [
+                    {
+                        text: "A. Laugh along and add a funny sticker to the thread.",
+                        correct: false,
+                        feedback: "❌ Participation in Cyberbullying! Even laughing or forwarding harmful content makes you complicit in online harassment."
+                    },
+                    {
+                        text: "B. Report the post to the server moderators, refuse to forward it, and offer private support to the targeted student.",
+                        correct: true,
+                        feedback: "✨ Outstanding! Standing against cyberbullying, protecting peer dignity, and practicing digital empathy defines a true CyberSafe leader."
+                    },
+                    {
+                        text: "C. Ignore it completely because it's not your problem.",
+                        correct: false,
+                        feedback: "💡 Bystander apathy allows online bullying to thrive. Ethical digital citizens stand up for safety and inclusion."
+                    }
+                ]
+            }
+        ];
+        let currentScenarioIndex = 0;
+
+        // Law Modal Data
+        const lawDetails = {
+            dpa: {
+                title: "Data Privacy Act (DPA) Essentials 🛡️",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">What is the Data Privacy Act?</p>
+                    <p class="mb-3">A landmark legislation designed to protect the fundamental human right of privacy, ensuring that personal information collected by schools, apps, and businesses is processed lawfully and securely.</p>
+                    <p class="font-semibold text-darkPurple mb-2">Student Rights Under DPA:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Right to be Informed:</strong> Knowing exactly why your data is collected.</li>
+                        <li><strong>Right to Access:</strong> Requesting copies of any personal data held by institutions.</li>
+                        <li><strong>Right to Erasure:</strong> Asking for your records to be deleted when no longer necessary.</li>
+                        <li><strong>Right to Damages:</strong> Claiming compensation if your data is mishandled due to security negligence.</li>
+                    </ul>
+                `
+            },
+            cybercrime: {
+                title: "Anti-Cybercrime Law Offenses ⚖️",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">Key Cybercrime Offenses:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Illegal Access:</strong> Accessing computer systems without lawful authority (hacking).</li>
+                        <li><strong>Data Interference:</strong> Damaging, altering, or deleting computer data or software.</li>
+                        <li><strong>Identity Theft:</strong> Intentionally acquiring, using, or misusing someone else's personal identifying information online.</li>
+                        <li><strong>Cyberbullying & Harassment:</strong> Using digital technologies to threaten, humiliate, or harass individuals repeatedly.</li>
+                    </ul>
+                    <p class="mt-3 text-xs bg-purple-50 p-2.5 rounded-xl text-purple-900 font-semibold">✨ Violating these laws carries heavy fines and imprisonment terms.</p>
+                `
+            },
+            copyright: {
+                title: "Digital Copyright & Ethics 💡",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">Protecting Digital Creation:</p>
+                    <p class="mb-3">Copyright law grants creators exclusive rights to their literary, artistic, musical, and software creations online.</p>
+                    <p class="font-semibold text-darkPurple mb-2">Key Ethical Rules for Students:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Fair Use:</strong> Using small excerpts for educational commentary or review with proper attribution.</li>
+                        <li><strong>No Piracy:</strong> Avoiding torrenting copyrighted games, movies, and paid textbooks.</li>
+                        <li><strong>Open Source Respect:</strong> Respecting licenses (like MIT or Apache) when utilizing code repositories on GitHub.</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Admin Submissions Data mockup
+        let submissionsList = [
+            { name: "Chloe M.", score: "5/5 (100%)", status: "Passed ✨", time: "10 mins ago" },
+            { name: "Liam K.", score: "4/5 (80%)", status: "Passed ✨", time: "25 mins ago" },
+            { name: "Sophia R.", score: "5/5 (100%)", status: "Passed ✨", time: "1 hour ago" },
+            { name: "Noah B.", score: "3/5 (60%)", status: "Good Try 💡", time: "3 hours ago" }
+        ];
+
+        // --- Navigation Tabs Function ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-pink-100', 'text-pink-600', 'font-bold');
+                if (btn.dataset.target === tabId) {
+                    btn.classList.add('bg-pink-100', 'text-pink-600', 'font-bold');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Trivia Carousel Functions ---
+        function updateTriviaDisplay() {
+            const item = triviaList[currentTriviaIndex];
+            document.getElementById('triviaIcon').innerHTML = `<i class="${item.icon}"></i>`;
+            document.getElementById('triviaCategory').innerText = item.category;
+            document.getElementById('triviaTitle').innerText = item.title;
+            document.getElementById('triviaDescription').innerText = item.description;
+            document.getElementById('triviaIndicator').innerText = `${currentTriviaIndex + 1} / ${triviaList.length}`;
+            document.getElementById('triviaCountDisplay').innerText = triviaList.length;
+        }
+
+        function nextTrivia() {
+            currentTriviaIndex = (currentTriviaIndex + 1) % triviaList.length;
+            updateTriviaDisplay();
+        }
+
+        function prevTrivia() {
+            currentTriviaIndex = (currentTriviaIndex - 1 + triviaList.length) % triviaList.length;
+            updateTriviaDisplay();
+        }
+
+        function toggleAutoPlay() {
+            const btn = document.getElementById('autoPlayBtn');
+            if (isAutoPlaying) {
+                clearInterval(autoPlayInterval);
+                isAutoPlaying = false;
+                btn.innerHTML = '<i class="fa-solid fa-play mr-1"></i> Auto-Play';
+                btn.classList.remove('bg-pink-500', 'text-white');
+                btn.classList.add('bg-purple-100', 'text-purple-700');
+            } else {
+                autoPlayInterval = setInterval(nextTrivia, 4000);
+                isAutoPlaying = true;
+                btn.innerHTML = '<i class="fa-solid fa-pause mr-1"></i> Pause';
+                btn.classList.remove('bg-purple-100', 'text-purple-700');
+                btn.classList.add('bg-pink-500', 'text-white');
+            }
+        }
+
+        // --- Password Strength Checker Logic ---
+        function togglePasswordVisibility() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function checkPasswordStrength() {
+            const val = document.getElementById('passwordInput').value;
+            const bar = document.getElementById('strengthBar');
+            const label = document.getElementById('strengthLabel');
+
+            let scoreCount = 0;
+            const hasLength = val.length >= 8;
+            const hasUpper = /[A-Z]/.test(val);
+            const hasLower = /[a-z]/.test(val);
+            const hasNumber = /[0-9]/.test(val);
+            const hasSpecial = /[^A-Za-z0-9]/.test(val);
+
+            updateChecklistItem('reqLength', hasLength);
+            updateChecklistItem('reqUpper', hasUpper);
+            updateChecklistItem('reqLower', hasLower);
+            updateChecklistItem('reqNumber', hasNumber);
+            updateChecklistItem('reqSpecial', hasSpecial);
+
+            if (hasLength) scoreCount++;
+            if (hasUpper) scoreCount++;
+            if (hasLower) scoreCount++;
+            if (hasNumber) scoreCount++;
+            if (hasSpecial) scoreCount++;
+
+            if (val.length === 0) {
+                bar.style.width = '10%';
+                bar.className = 'h-full rounded-full bg-pink-300 transition-all duration-300';
+                label.innerText = 'Start typing a password...';
+            } else if (scoreCount <= 2) {
+                bar.style.width = '30%';
+                bar.className = 'h-full rounded-full bg-pink-400 transition-all duration-300';
+                label.innerText = 'Too basic bestie! 📉';
+            } else if (scoreCount <= 4) {
+                bar.style.width = '70%';
+                bar.className = 'h-full rounded-full bg-purple-400 transition-all duration-300';
+                label.innerText = 'Getting stronger! ✨';
+            } else {
+                bar.style.width = '100%';
+                bar.className = 'h-full rounded-full bg-emerald-400 transition-all duration-300';
+                label.innerText = 'Strong & Secure! 🛡️💖';
+            }
+        }
+
+        function updateChecklistItem(elementId, isValid) {
+            const el = document.getElementById(elementId);
+            if (isValid) {
+                el.className = 'flex items-center space-x-2.5 text-sm text-emerald-600 font-medium';
+                el.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-500"></i>' + el.innerHTML.substring(el.innerHTML.indexOf('</span>'));
+            } else {
+                el.className = 'flex items-center space-x-2.5 text-sm text-gray-500';
+                el.innerHTML = '<i class="fa-regular fa-circle-xmark text-pink-400"></i>' + el.innerHTML.substring(el.innerHTML.indexOf('</span>'));
+            }
+        }
+
+        // --- Interactive Quiz Logic ---
+        function loadQuizQuestion() {
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quizProgress').innerText = `Question ${currentQuizIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('quizScoreBadge').innerText = `Score: ${score} pts`;
+            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('explanationBox').classList.add('hidden');
+            document.getElementById('questionBox').style.display = 'block';
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-pink-100 bg-white/80 hover:bg-pink-50 hover:border-pink-300 font-medium text-gray-700 transition flex items-center justify-between';
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-chevron-right text-xs text-pink-300"></i>`;
+                btn.onclick = () => selectQuizOption(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(selectedIdx) {
+            const q = quizQuestions[currentQuizIndex];
+            const isCorrect = selectedIdx === q.correct;
+            if (isCorrect) score += 20;
+
+            const expHeader = document.getElementById('explanationHeader');
+            const expText = document.getElementById('explanationText');
+
+            if (isCorrect) {
+                expHeader.innerHTML = '<i class="fa-solid fa-circle-check text-green-500 text-lg"></i> <span class="text-green-700 font-bold">Correct, Bestie! 🎉</span>';
+            } else {
+                expHeader.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400 text-lg"></i> <span class="text-red-600 font-bold">Not quite right!</span>';
+            }
+            expText.innerText = q.explanation;
+
+            // Disable all option buttons
+            const buttons = document.getElementById('optionsContainer').children;
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (i === q.correct) {
+                    buttons[i].className = 'w-full text-left p-4 rounded-2xl border-2 border-green-400 bg-green-50 font-bold text-green-800 flex items-center justify-between';
+                } else if (i === selectedIdx && !isCorrect) {
+                    buttons[i].className = 'w-full text-left p-4 rounded-2xl border-2 border-red-300 bg-red-50 font-medium text-red-800 flex items-center justify-between';
+                }
+            }
+
+            document.getElementById('explanationBox').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            document.getElementById('quizCard').classList.add('hidden');
+            document.getElementById('quizResultScreen').classList.remove('hidden');
+            document.getElementById('finalScoreText').innerText = `You earned ${score} out of 100 points!`;
+
+            let badgeTitle = "🛡️ Certified Cyber Queen / King!";
+            if (score < 60) badgeTitle = "💡 Cyber Rookie (Keep Learning!)";
+            else if (score < 100) badgeTitle = "💖 Cyber Safety Enthusiast!";
+            document.getElementById('badgeEarnedText').innerText = `Badge Earned: ${badgeTitle}`;
+
+            // Add to admin mock submissions table
+            submissionsList.unshift({
+                name: currentStudentName,
+                score: `${score}/100 (${score}%)`,
+                status: score >= 60 ? "Passed ✨" : "Retry Needed",
+                time: "Just now"
+            });
+            renderAdminTable();
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            document.getElementById('quizResultScreen').classList.add('hidden');
+            document.getElementById('quizCard').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        // --- Module Details Modal Content ---
+        const moduleContents = {
+            phishing: {
+                title: "Phishing & Social Engineering 🎣",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">What is Phishing?</p>
+                    <p class="mb-3">Phishing is a cybercrime where targets are contacted by email, telephone, or text message by someone posing as a legitimate institution to lure individuals into providing sensitive data such as personally identifiable information, banking and credit card details, and passwords.</p>
+                    <p class="font-semibold text-darkPurple mb-2">Red Flags to Watch Out For:</p>
+                    <ul class="list-disc pl-5 space-y-1 mb-3">
+                        <li><strong>Urgent or Threatening Language:</strong> "Act within 24 hours or your account will be permanently deleted!"</li>
+                        <li><strong>Generic Greetings:</strong> Emails starting with "Dear Customer" instead of your actual name.</li>
+                        <li><strong>Suspicious URLs:</strong> Hovering over links reveals strange domains like <code class="bg-pink-100 px-1 rounded text-pink-700">netflix-support-login-secure.com</code>.</li>
+                        <li><strong>Unsolicited Attachments:</strong> Unexpected invoices or document downloads.</li>
+                    </ul>
+                    <p class="bg-pink-50 p-3 rounded-xl border border-pink-200 text-pink-900 font-medium">✨ Golden Rule: When in doubt, never click links directly from messages. Open your browser and navigate to the official website manually.</p>
+                `
+            },
+            passwords: {
+                title: "Password Security & Passphrases 🔑",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">Why Standard Passwords Fail:</p>
+                    <p class="mb-3">Short passwords using pet names, birthdays, or simple words like <code class="bg-purple-100 px-1 rounded text-purple-700">princess2026</code> can be guessed by automated cracking software in milliseconds.</p>
+                    <p class="font-semibold text-darkPurple mb-2">How to Build Unbreakable Passphrases:</p>
+                    <ul class="list-disc pl-5 space-y-1 mb-3">
+                        <li><strong>Embrace Length:</strong> Aim for at least 14–16 characters. Length is much harder to crack than random symbols.</li>
+                        <li><strong>Combine Four Random Words:</strong> E.g., <code class="bg-purple-100 px-1 rounded text-purple-700">Pink-Laptop-Coffee-Balloon</code>.</li>
+                        <li><strong>Use a Password Manager:</strong> Don't reuse the same password across multiple student portals or social media accounts.</li>
+                        <li><strong>Enable 2FA/MFA:</strong> Always turn on two-factor authentication for an un-hackable fortress!</li>
+                    </ul>
+                `
+            },
+            privacy: {
+                title: "Privacy & Social Media Safety 🕵️‍♀️",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">Managing Your Digital Footprint:</p>
+                    <p class="mb-3">Everything you post, comment on, or tag yourself in online creates a permanent digital history that future employers, universities, and scammers can review.</p>
+                    <p class="font-semibold text-darkPurple mb-2">Best Practices for Students:</p>
+                    <ul class="list-disc pl-5 space-y-1 mb-3">
+                        <li><strong>Lock Down Privacy Settings:</strong> Ensure your Instagram, TikTok, and Snapchat accounts are set to private so only approved friends see your posts.</li>
+                        <li><strong>Never Share Private Data:</strong> Avoid posting your home address, phone number, school timetable, or student ID card online.</li>
+                        <li><strong>Pause Before Posting:</strong> If you wouldn't want your teachers or parents seeing it on a billboard, don't post it!</li>
+                    </ul>
+                `
+            },
+            ethics: {
+                title: "Digital Ethics & Responsible Tech 💖",
+                body: `
+                    <p class="font-semibold text-darkPurple mb-2">What is Digital Citizenship?</p>
+                    <p class="mb-3">Digital citizenship refers to responsible technology use. As IT professionals and students in training, we have a social responsibility to promote a safe and ethical online environment.</p>
+                    <p class="font-semibold text-darkPurple mb-2">Core Pillars of Digital Ethics:</p>
+                    <ul class="list-disc pl-5 space-y-1 mb-3">
+                        <li><strong>Anti-Cyberbullying:</strong> Treating peers with empathy and kindness in chatrooms, DMs, and comment sections.</li>
+                        <li><strong>Respecting Intellectual Property:</strong> Properly citing sources, avoiding software piracy, and respecting copyright laws.</li>
+                        <li><strong>Reporting Security Flaws:</strong> Practicing ethical hacking by reporting vulnerabilities responsibly instead of exploiting them.</li>
+                    </ul>
+                `
+            }
+        };
+
+        function openModuleDetail(modKey) {
+            const data = moduleContents[modKey];
+            document.getElementById('moduleModalTitle').innerText = data.title;
+            document.getElementById('moduleModalContent').innerHTML = data.body;
+            document.getElementById('moduleModal').classList.remove('hidden');
+        }
+
+        function closeModuleModal() {
+            document.getElementById('moduleModal').classList.add('hidden');
+        }
+
+        // --- Cyber Laws & Ethics Hub Functions ---
+        function openLawModal(lawKey) {
+            const data = lawDetails[lawKey];
+            document.getElementById('lawModalTitle').innerText = data.title;
+            document.getElementById('lawModalBody').innerHTML = data.body;
+            document.getElementById('lawModal').classList.remove('hidden');
+        }
+
+        function closeLawModal() {
+            document.getElementById('lawModal').classList.add('hidden');
+        }
+
+        // Scenario Simulator Logic
+        function loadScenario() {
+            const s = ethicsScenarios[currentScenarioIndex];
+            document.getElementById('scenarioTag').innerText = s.tag;
+            document.getElementById('scenarioTitle').innerText = s.title;
+            document.getElementById('scenarioDesc').innerText = s.description;
+            document.getElementById('scenarioFeedback').classList.add('hidden');
+
+            const container = document.getElementById('scenarioOptions');
+            container.innerHTML = '';
+
+            s.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-pink-200 bg-white hover:bg-pink-50 hover:border-purple-300 font-medium text-gray-700 transition shadow-sm';
+                btn.innerHTML = `<span class="text-sm">${opt.text}</span>`;
+                btn.onclick = () => selectScenarioOption(opt);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectScenarioOption(opt) {
+            const fbBox = document.getElementById('scenarioFeedback');
+            const fbTitle = document.getElementById('feedbackTitle');
+            const fbText = document.getElementById('feedbackText');
+
+            if (opt.correct) {
+                fbBox.className = 'p-6 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-3';
+                fbTitle.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i> <span class="text-emerald-800">Professional Ethics Standard Met! ✨</span>';
+            } else {
+                fbBox.className = 'p-6 rounded-2xl bg-pink-50 border border-pink-200 space-y-3';
+                fbTitle.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-pink-600 text-lg"></i> <span class="text-darkPurple">Ethical or Legal Warning! ⚠️</span>';
+            }
+
+            fbText.innerText = opt.feedback;
+            fbBox.classList.remove('hidden');
+
+            // Disable option buttons
+            const buttons = document.getElementById('scenarioOptions').children;
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                buttons[i].classList.add('opacity-70', 'cursor-not-allowed');
+            }
+        }
+
+        function nextScenario() {
+            currentScenarioIndex = (currentScenarioIndex + 1) % ethicsScenarios.length;
+            loadScenario();
+        }
+
+        function printCodeOfConduct() {
+            const signer = currentStudentName || "Student User";
+            document.getElementById('pledgeSignerName').innerText = signer;
+            showModal("Certificate Ready! 🖨️", `Digital Code of Conduct pledge verified for ${signer}. You can print this page using your browser's print command (Ctrl+P / Cmd+P).`);
+            window.print();
+        }
+
+        // --- Admin Dashboard Functions ---
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminSubmissionsTable');
+            tbody.innerHTML = '';
+            submissionsList.forEach(sub => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-pink-50/50 transition';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-semibold text-darkPurple flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-full bg-pink-200 text-pink-700 flex items-center justify-center text-xs font-bold">${sub.name.charAt(0)}</div>
+                        <span>${sub.name}</span>
+                    </td>
+                    <td class="py-3 px-4 text-gray-700 font-medium">${sub.score}</td>
+                    <td class="py-3 px-4"><span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-bold">${sub.status}</span></td>
+                    <td class="py-3 px-4 text-gray-400 text-xs">${sub.time}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('totalSubmissionsCount').innerText = submissionsList.length + 138;
+        }
+
+        function openAddTriviaModal() {
+            document.getElementById('addTriviaModal').classList.remove('hidden');
+        }
+
+        function closeAddTriviaModal() {
+            document.getElementById('addTriviaModal').classList.add('hidden');
+        }
+
+        function saveNewTrivia() {
+            const cat = document.getElementById('newTriviaCat').value.trim();
+            const title = document.getElementById('newTriviaTitle').value.trim();
+            const desc = document.getElementById('newTriviaDesc').value.trim();
+
+            if (!cat || !title || !desc) {
+                showModal("Missing Fields ⚠️", "Please fill in all trivia fields before publishing, bestie!");
+                return;
+            }
+
+            triviaList.push({
+                icon: "fa-solid fa-sparkles",
+                category: cat,
+                title: title,
+                description: desc
+            });
+
+            currentTriviaIndex = triviaList.length - 1;
+            updateTriviaDisplay();
+            closeAddTriviaModal();
+
+            document.getElementById('newTriviaCat').value = '';
+            document.getElementById('newTriviaTitle').value = '';
+            document.getElementById('newTriviaDesc').value = '';
+
+            showModal("Success! ✨", "Your new trivia fact has been published to the homepage carousel!");
+        }
+
+        // --- Login Modal Functions ---
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function handleLogin() {
+            const nameInput = document.getElementById('loginNameInput').value.trim();
+            if (nameInput) {
+                currentStudentName = nameInput;
+                document.getElementById('userNameDisplay').innerText = currentStudentName;
+                document.getElementById('userInitial').innerText = currentStudentName.charAt(0).toUpperCase();
+                document.getElementById('userBadge').classList.remove('hidden');
+            }
+            document.getElementById('loginModal').classList.add('hidden');
+            showModal("Welcome Back! 💖", `Logged in successfully as ${currentStudentName}. Let's keep exploring!`);
+        }
+
+        // --- Generic Custom Modal ---
+        function showModal(title, message) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            const container = document.getElementById('modalContainer');
+            const box = document.getElementById('modalBox');
+            container.classList.remove('hidden');
+            setTimeout(() => box.classList.remove('scale-95', 'opacity-0'), 10);
+        }
+
+        function closeModal() {
+            const container = document.getElementById('modalContainer');
+            const box = document.getElementById('modalBox');
+            box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => container.classList.add('hidden'), 200);
+        }
+
+        // --- Window Initialization ---
+        window.onload = function() {
+            updateTriviaDisplay();
+            loadQuizQuestion();
+            loadScenario();
+            renderAdminTable();
+            checkPasswordStrength();
+        };
+    </script>
+</body>
+</html>
